@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+        }
+        
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: gradientAnimation 10s linear infinite;
+        }
+        
+        .display {
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 15px;
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+        
+        .buttons button {
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .buttons button:hover {
+            background-color: #d2d2d2;
+        }
+        
+        .equals {
+            grid-column: 4 / span 1;
+            background-color: #ff9800;
+            color: #ffffff;
+        }
+        
+        .clear {
+            grid-column: 1 / span 2;
+        }
+        
+        .delete {
+            grid-column: 3 / span 1;
+        }
+        
+        .history {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            text-align: right;
+            font-size: 18px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display"></div>
+        <div class="buttons">
+            <button onclick="appendToDisplay(7)">7</button>
+            <button onclick="appendToDisplay(8)">8</button>
+            <button onclick="appendToDisplay(9)">9</button>
+            <button onclick="appendToDisplay('+')">+</button>
+            <button onclick="appendToDisplay(4)">4</button>
+            <button onclick="appendToDisplay(5)">5</button>
+            <button onclick="appendToDisplay(6)">6</button>
+            <button onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay(1)">1</button>
+            <button onclick="appendToDisplay(2)">2</button>
+            <button onclick="appendToDisplay(3)">3</button>
+            <button onclick="appendToDisplay('*')">*</button>
+            <button onclick="appendToDisplay(0)">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate()" class="equals">=</button>
+            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('%')">%</button>
+            <button class="clear" onclick="clearDisplay()">Clear</button>
+            <button class="delete" onclick="deleteLastCharacter()">&#9003;</button>
+        </div>
+        <div class="history" id="history"></div>
+        <div class="footer">Made by Sanika Satish Lad. Task 3 - Simple Calculator</div>
+    </div>
+
+    <script>
+        let displayValue = '';
+        let history = '';
+
+        function appendToDisplay(value) {
+            displayValue += value;
+            document.getElementById('display').innerHTML = displayValue;
+        }
+
+        function clearDisplay() {
+            displayValue = '';
+            history = '';
+            document.getElementById('display').innerHTML = '';
+            document.getElementById('history').innerHTML = '';
+        }
+
+        function deleteLastCharacter() {
+            displayValue = displayValue.slice(0, -1);
+            document.getElementById('display').innerHTML = displayValue;
+        }
+
+        function calculate() {
+            try {
+                const result = eval(displayValue);
+                displayValue = result;
+                history = displayValue;
+                document.getElementById('display').innerHTML = displayValue;
+                document.getElementById('history').innerHTML = history;
+            } catch (error) {
+                displayValue = '';
+                document.getElementById('display').innerHTML = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
